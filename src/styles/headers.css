@@ -1,0 +1,18 @@
+
+h1{
+  font-family: var(--font-headers);
+  font-size: var(--font-size-xl);
+  color: var(--color-yellow);
+  text-align: left;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+h2{
+  font-family: var(--font-headers);
+  font-size: var(--font-size-l);
+  color: var(--color-yellow);
+  text-align: left;
+  margin: 0;
+  letter-spacing: 1px;
+}

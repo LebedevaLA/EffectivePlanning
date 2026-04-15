@@ -1,0 +1,28 @@
+/* src/App.css */
+@import './styles/stylesVars.css';
+@import './styles/headers.css';
+@import './styles/mainpage.css';
+@import './styles/buttons.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-secondary);
+  background: var(--color-white);
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+ul, ol {
+  list-style: none;
+}

@@ -1,0 +1,112 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+.modal-content {
+  background: var(--color-white);
+  border-radius: 1rem;
+  padding: clamp(1rem, 5vw, 2rem);
+  width: min(90%, 500px);
+  max-width: 500px;
+  position: relative;
+  animation: slideIn 0.3s ease;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+.modal-title {
+  font-family: var(--font-headers);
+  font-size: clamp(1.2rem, 5vw, 1.8rem);
+  color: var(--color-purple);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.modal-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-family: var(--font-text);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  border: 2px solid var(--color-orange);
+  border-radius: 0.5rem;
+  resize: vertical;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.modal-submit {
+  padding: 0.5rem 1rem;
+  font-family: var(--font-button);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-submit {
+  background: var(--color-purple);
+  color: white;
+}
+
+.modal-submit:hover:not(:disabled) {
+  background: var(--color-orange);
+  transform: translateY(-1px);
+}
+
+.modal-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 1rem;
+  }
+  
+  .modal-buttons {
+    gap: 0.5rem;
+  }
+  
+  .modal-submit {
+    padding: 0.4rem 0.8rem;
+  }
+}

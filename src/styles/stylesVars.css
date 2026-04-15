@@ -1,0 +1,31 @@
+@font-face {
+  font-family: 'BebasC';
+  src: url('../assets/Bebas\ Neue\ Cyrillic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'BebasPro';
+  src: url('../assets/Bebas\ Neue\ Pro\ SemiExpanded\ Middle.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+
+  --font-headers: 'BebasC';
+  --font-text: 'BebasPro';
+  --font-button:'Avenir Next';
+  
+  --font-size-xl: clamp(3rem, 12vw, 6rem);
+  --font-size-l: clamp(1rem, 8vw, 3rem);
+  --font-size-md: clamp(0.7rem, 2.5vw, 1rem);
+
+  --color-yellow: #FFDF2D;
+  --color-purple: #C293FF;
+  --color-white: #FFFDFA;
+  --color-orange: #DF8900;
+  
+  
+}
