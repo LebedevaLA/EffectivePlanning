@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api' //вставить свой
+const API_URL = 'http://localhost:3000/api'
 
 export const api = {
     addTask: async function(taskText) {
@@ -20,20 +20,17 @@ export const api = {
         
         return response.json()
     },
-    getAllTasks: async function(){
-        // { taskObjects : [
-            //{text: "Купить хлеб"},
-            //{text: "Позвонить маме"}
-        //] }
+    getAllTasks: async function() {
         const response = await fetch(`${API_URL}/tasks?status=inbox`, {
             method: 'GET',
-            headers: {                         
-                'Content-Type': 'application/json',
-            }
+            headers: { 'Content-Type': 'application/json' }
         });
+        
         if (!response.ok) {
             throw new Error('Ошибка при получении дел')
         }
-        return response.json()
+        
+        const data = await response.json()
+        return data.taskObjects 
     }
 }

@@ -16,26 +16,32 @@ export const InBox = ({ mode }) => {
   
   const handleAddTask = async (taskText) => {
     console.log('Новое дело:', taskText)
-    if (mode === 'monkey') {
-        try {
-            await api.addTask(taskText);
-            console.log('Дело отправлено на сервер');
-        } catch (error) {
-            console.error('Ошибка при добавлении:', error);
-        }
-    } else {
-        try {
-            const tasks = await api.getAllTasks();
-            console.log('Получены дела:', tasks);
-            localStorage.setItem('inbox_tasks', JSON.stringify(tasks));
-            console.log('Дела сохранены в localStorage');
-        } catch (error) {
-            console.error('Ошибка при получении дел:', error);
-        }
+    try {
+        await api.addTask(taskText);
+        console.log('Дело отправлено на сервер');
+        const savedTasks = localStorage.getItem('inbox_tasks');
+        const parsedTasks = JSON.parse(savedTasks);
+        console.log('📦 Содержимое localStorage (inbox_tasks):', parsedTasks);
+    } catch (error) {
+        console.error('Ошибка при добавлении:', error);
     }
     setIsModalOpen(false)
   }
-  
+  const handleUnloadTasks = async () => {
+    console.log('Разгрузка inbox...');
+    try {
+        const tasks = await api.getAllTasks();
+        console.log('Получены дела:', tasks);
+        localStorage.setItem('inbox_tasks', JSON.stringify(tasks));
+        console.log('Дела сохранены в localStorage');
+        const savedTasks = localStorage.getItem('inbox_tasks');
+        const parsedTasks = JSON.parse(savedTasks);
+        console.log('📦 Содержимое localStorage (inbox_tasks):', parsedTasks);
+    } catch (error) {
+        console.error('Ошибка при получении дел:', error);
+    }
+  }
+
   return (
     <div className="inbox_container">
       <section className="inbox">
@@ -46,7 +52,7 @@ export const InBox = ({ mode }) => {
           </button>
         )}
         {mode === 'human' && (
-          <button className="human_button_inbox">
+          <button className="human_button_inbox" onClick={handleUnloadTasks}>
             Разгрузить
           </button>
         )}
