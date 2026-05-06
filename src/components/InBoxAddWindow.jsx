@@ -23,19 +23,19 @@ export const Modal = ({ isOpen, onClose, onAdd }) => {
   
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-content-container" onClick={(e) => e.stopPropagation()}>
         <h2 className="modal-title">Добавить новое дело</h2>
         <form onSubmit={handleSubmit}>
           <textarea
-            className="modal-textarea"
+            className="description-field"
             value={taskText}
             onChange={(e) => setTaskText(e.target.value)}
             placeholder="Опишите дело..."
             rows={4}
             autoFocus
           />
-          <div className="modal-buttons">
-            <button type="submit" className="modal-submit" disabled={!taskText.trim()}>
+          <div className="one-button-container">
+            <button className = "button-monkey" disabled={!taskText.trim()}>
               Добавить
             </button>
           </div>

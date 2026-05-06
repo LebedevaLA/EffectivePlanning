@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { InBox } from '../components/InBox'
 import { ModeToggle } from '../components/ModeToggle'
-
+import { ProjectBox } from '../components/ProjectBox'
 
 
 export const MainPage = () => {
