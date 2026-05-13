@@ -1,13 +1,10 @@
-// TaskModal.jsx
 import { useState, useEffect } from 'react'
 
-export const TaskModal = ({ isOpen, taskText, onClose, onSubmit }) => {
-  const [taskName, setTaskName] = useState('')
+export const ProblemModal = ({ isOpen, taskText, onClose, onSubmit }) => {
   const [taskDescription, setTaskDescription] = useState('')
   
   useEffect(() => {
     if (!isOpen) {
-      setTaskName('')
       setTaskDescription('')
     }
   }, [isOpen])
@@ -16,15 +13,12 @@ export const TaskModal = ({ isOpen, taskText, onClose, onSubmit }) => {
   
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (taskName.trim()) {
+    if (taskDescription.trim()) {
       onSubmit({
-        text: taskName.trim(),
         description: taskDescription.trim(),
-        sourceText: taskText,
-        status: 'inbox'
       })
-      setTaskName('')
       setTaskDescription('')
+      onClose()
     }
   }
   
@@ -42,21 +36,15 @@ export const TaskModal = ({ isOpen, taskText, onClose, onSubmit }) => {
         
         <form onSubmit={handleSubmit}>
           <textarea
-            className="name-field"
-            onChange={(e) => setTaskName(e.target.value)}
-            placeholder="Название задачи..."
-            rows={2}
-            autoFocus
-          />
-          <textarea
             className="description-field"
-            onChange={(e) => setTaskName(e.target.value)}
-            placeholder="Опишите задачу..."
+            value={taskDescription}  // ← ДОБАВИТЬ: value
+            onChange={(e) => setTaskDescription(e.target.value)}
+            placeholder="Название и описание задачи..."
             rows={3}
             autoFocus
           />
           <div className="one-button-container">
-            <button className = "button-human" disabled={!taskText.trim()}>
+            <button className="button-human" disabled={!taskDescription.trim()}>
               Добавить Задачу
             </button>
           </div>

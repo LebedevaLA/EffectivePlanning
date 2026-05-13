@@ -87,3 +87,66 @@
   background-color: var(--color-purple);
   color: var(--color-white);
 }
+
+.del-problem {
+  color: var(--color-purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  margin-left: auto;
+  flex-shrink: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 18px;
+}
+
+.del-problem:hover {
+  transform: scale(1.1);
+  color: var(--color-orange);
+}
+
+.button-select{
+  background: var(--color-yellow);
+  color: var(--color-orange);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-button);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 60%;
+}
+.button-select:hover:not(:disabled) {
+  background: var(--color-purple);
+  color: var(--color-white);
+  transform: translateY(-1px);
+}
+.add-task-button {
+  background-color: var(--color-purple);
+  color: var(--color-white);
+  font-family: var(--font-button);
+  font-size: clamp(0.8rem, 3vw, 1rem);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: clamp(150px, 20vw, 250px);  /* мин 150px, идеально 20% экрана, макс 250px */
+  height: clamp(40px, 8vh, 60px);
+  @media (max-width: 768px) {
+    width: 80%;
+    max-width: 300px;
+  }
+}
+.add-task-button:hover:not(:disabled){
+  background: var(--color-yellow);
+  color: var(--color-orange);
+  transform: translateY(-1px);
+}

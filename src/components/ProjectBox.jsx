@@ -1,44 +1,60 @@
 import { useState, useEffect } from 'react'
 import { api } from '../services/api'
+import { InfoProject } from './InfoProject'
 
 export const ProjectBox = () => {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
+  const [selectedProject, setSelectedProject] = useState(null)
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
   
   useEffect(() => {
     loadProjects()
   }, [])
-  
+  const handleProjectUpdate = async () => {
+    await loadProjects()
+  }
   const loadProjects = async () => {
     try {
       setLoading(true)
       const data = await api.getAllProjects()
-      setProjects(data.projects || [])
+      setProjects(data)
     } catch (error) {
       console.error('Ошибка загрузки проектов:', error)
     } finally {
       setLoading(false)
     }
   }
+  const handleProjectClick = (project) => {
+    console.log('Проект который открываем:', project)  // ← ДОБАВЬ ЭТО
+    setSelectedProject(project)
+    setIsInfoModalOpen(true)
+  }
   
   if (loading) return <div>Загрузка проектов...</div>
   
   return (
-    <div className="projects-section">
-      <h2>Проекты</h2>
-      {projects.length === 0 ? (
-        <p>Нет проектов. Создайте первый через разгрузку InBox!</p>
-      ) : (
-        <div className="projects-list">
-          {projects.map(project => (
-            <div key={project.id} className="project-card">
-              <h3>{project.name}</h3>
-              <p>{project.description}</p>
-              <small>Создан из: {project.sourceText}</small>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="project_container">
+      <section className='project_area'>
+        <h2>Проекты</h2>
+        {projects.length === 0 && <h2>Нет проектов</h2>}
+        {projects.map(project => (
+          <div 
+            key={project.id}
+            className="project-item"
+            onClick={() => handleProjectClick(project)}
+          >
+            <p style={{ color: 'var(--color-purple)' }}>{project.name || 'Без названия'}</p>
+          </div>
+        ))}
+      </section>
+      <InfoProject
+        isOpen={isInfoModalOpen}
+        project={selectedProject}
+        onClose={() => setIsInfoModalOpen(false)}
+        onProjectUpdate={handleProjectUpdate}  // ← ПЕРЕДАЕМ ФУНКЦИЮ
+      />
     </div>
+    
   )
 }

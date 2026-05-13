@@ -16,11 +16,11 @@ export const ProjectModal = ({ isOpen, taskText, onClose, onSubmit }) => {
   
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log("🔴 ProjectModal отправляет:", {name: projectName.trim(), description: projectDescription.trim()})
     if (projectName.trim()) {
       onSubmit({
         name: projectName.trim(),
         description: projectDescription.trim(),
-        sourceText: taskText
       })
     }
   }

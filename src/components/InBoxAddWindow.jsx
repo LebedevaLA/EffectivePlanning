@@ -1,7 +1,7 @@
 import '../styles/modal.css'
 import { useState, useEffect } from 'react'
 
-export const Modal = ({ isOpen, onClose, onAdd }) => {
+export const TaskModal = ({ isOpen, onClose, onAdd }) => {
   const [taskText, setTaskText] = useState('')
   
   useEffect(() => {

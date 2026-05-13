@@ -6,6 +6,8 @@
   margin-left: clamp(0px, 20%, 360px);
   margin-right: clamp(0px, 20%, 360px);
   padding: clamp(36px, 2%, 60px);
+  gap: 4rem;
+  align-items: center;
 }
 
 .inbox_container {
@@ -14,12 +16,6 @@
   align-items: center;
   justify-content: center;
   width: min(63%, 300px);
-  
-  margin-left: auto;
-  margin-right: 20%;
-  
-  margin-top: 15%;
-  margin-bottom: 0;
 }
 
 .inbox {
@@ -81,13 +77,139 @@ footer {
 .project_container{
   display: flex;
   flex-direction: column;
+  background: var(--color-white);
+  border: clamp(0.2rem, 1vw, 0.5rem) solid var(--color-purple);
+  border-radius: clamp(1rem, 3vw, 2rem);
+  width: 60%;
+  padding: clamp(1.5rem, 8vw, 3rem);
   align-items: center;
   justify-content: center;
-  width: min(90%, 500px);
-  
-  margin-right: auto;
-  margin-left: 5%;
-  
-  margin-top: 15%;
-  margin-bottom: 0;
+}
+
+.project_area{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+.project-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: var(--color-white);
+  border-radius: 8px;
+  border-style: solid;
+  border-color: var(--color-yellow);
+  border-width: 2px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.project-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-purple);
+}
+
+.task-card {
+    border: 2px solid var(--color-yellow);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    transition: all 0.3s;
+}
+
+.task-card.selected {
+    border-color: var(--color-orange);
+    background: rgba(255, 165, 0, 0.1);
+}
+
+.selection-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.progress {
+    text-align: center;
+    color: var(--color-purple);
+    margin-top: 16px;
+}
+
+.task-context {
+    text-align: center;
+    font-weight: bold;
+}
+.project-description {
+  color: var(--color-purple);
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.tasks-select-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.task-select-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.task-select-item:hover {
+  background: #f9f9f9;
+}
+
+.task-select-item input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.task-select-item input[type="radio"]:disabled {
+  cursor: not-allowed;
+}
+
+.task-select-item label {
+  flex: 1;
+  cursor: pointer;
+  margin: 0;
+}
+
+.problems-list {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.problem-select-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.problem-select-item input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.problem-select-item p {
+  margin: 0;
+  flex: 1;
 }

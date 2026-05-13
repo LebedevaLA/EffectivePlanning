@@ -1,10 +1,20 @@
-// UnloadModal.jsx
 import { useState } from 'react'
 import { ProjectModal } from './ProjectModal'
-import { TaskModal } from './TaskModal'
+import { ProblemModal } from './ProblemModal'
 import { DelayModal } from './DelayModal'
+import { TaskModal } from './InBoxAddWindow'
 
-export const UnloadModal = ({ isOpen, task, onClose, onDelete, onCreateProject, onCreateProblem, onDelay }) => {
+export const UnloadModal = ({ 
+  isOpen, 
+  task, 
+  onClose, 
+  onCreateProject, 
+  onCreateProblem, 
+  onDelay,
+  addTaskModule,
+  onCloseAddTask,
+  onAddTask
+}) => {
   const [subModalType, setSubModalType] = useState(null)
   
   if (!isOpen || !task) return null;
@@ -24,60 +34,81 @@ export const UnloadModal = ({ isOpen, task, onClose, onDelete, onCreateProject, 
   const handleCloseSubModal = () => {
     setSubModalType(null)
   }
+  
   const handleProjectSubmit = async (projectData) => {
-    await onCreateProject(projectData)  // создаем проект для ЭТОГО дела
-    handleCloseSubModal()  // ← возвращаемся в UnloadModal с ТЕМ ЖЕ делом
+    await onCreateProject(projectData)
+    handleCloseSubModal()
   }
   
   const handleTaskSubmit = async (taskData) => {
-    await onCreateProblem(taskData)  // создаем задачу для ЭТОГО дела
-    handleCloseSubModal()  // ← возвращаемся в UnloadModal с ТЕМ ЖЕ делом
+    await onCreateProblem(taskData)
+    handleCloseSubModal()
   }
   
   const handleDelaySubmit = async (delayUntil) => {
-    await onDelay(delayUntil)  // откладываем дело
-    handleCloseSubModal()  // ← возвращаемся в UnloadModal с ТЕМ ЖЕ делом
+    await onDelay(delayUntil)
+    handleCloseSubModal()
   }
-  
+
   return (
     <>
-    <div className="modal-overlay">
-      <div className="modal-content-container" onClick={(e) => e.stopPropagation()}>
+      <div className="modal-overlay">
         <button 
-          className="modal-close-button" 
-          onClick={onDelete}
-          aria-label="Закрыть"
+          className='add-task-button' 
+          onClick={onCloseAddTask}
         >
-          ✕
+          Добавить дело в Inbox
         </button>
-        <h2 className="modal-title">{task.text}</h2>
-        <div className="buttons-container">
-            <button className="button-human" 
+        
+        <div className="modal-content-container" onClick={(e) => e.stopPropagation()}>
+          <button 
+            className="modal-close-button" 
+            onClick={() => {
+              const confirmDelete = window.confirm('Дело из инбокса будет удалено. Вы уверены?');
+              if (confirmDelete) {
+                onClose();
+              }
+            }}
+            aria-label="Закрыть"
+          >
+            ✕
+          </button>
+          <h2 className="modal-title">{task.text}</h2>
+          <div className="buttons-container">
+            <button 
+              className="button-human" 
               onClick={handleProjectClick}
-              disabled={!task.text.trim()}>
+              disabled={!task.text.trim()}
+            >
               Проект
             </button>
-            <button className="button-human" 
+            <button 
+              className="button-human" 
               onClick={handleTaskClick}
-              disabled={!task.text.trim()}>
+              disabled={!task.text.trim()}
+            >
               Задача
             </button>
-            <button className="button-human" 
+            <button 
+              className="button-human" 
               onClick={handleDelayClick}
-              disabled={!task.text.trim()}>
+              disabled={!task.text.trim()}
+            >
               Отложенная задача
             </button>
           </div>
+        </div>
       </div>
-    </div>
+      
       {subModalType === 'task' && (
-        <TaskModal
+        <ProblemModal
           isOpen={true}
           taskText={task.text}
           onClose={handleCloseSubModal}
           onSubmit={handleTaskSubmit}
         />
       )}
+      
       {subModalType === 'project' && (
         <ProjectModal
           isOpen={true}
@@ -86,6 +117,7 @@ export const UnloadModal = ({ isOpen, task, onClose, onDelete, onCreateProject, 
           onSubmit={handleProjectSubmit}
         />
       )}
+      
       {subModalType === 'delay' && (
         <DelayModal
           isOpen={true}
@@ -95,6 +127,11 @@ export const UnloadModal = ({ isOpen, task, onClose, onDelete, onCreateProject, 
         />
       )}
       
+      <TaskModal 
+        isOpen={addTaskModule}
+        onClose={onCloseAddTask}
+        onAdd={onAddTask}
+      />
     </>
   )
 }

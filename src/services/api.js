@@ -10,7 +10,6 @@ export const api = {
             },
             body: JSON.stringify({ 
                 text: taskText,
-                status: 'inbox'
             })
         });
         
@@ -21,16 +20,13 @@ export const api = {
         return response.json()
     },
     addProblem: async function(taskText) {
-       // {text: "Позвонить маме"}
+        console.log(`Задача ${taskText} отправляется на сервер ....`)
         const response = await fetch(`${API_URL}/problems`, {
             method: 'POST',
             headers: {                         
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ 
-                text: taskText,
-                status: 'inbox'
-            })
+            body: JSON.stringify(taskText)
         });
         
         if (!response.ok) {
@@ -40,16 +36,13 @@ export const api = {
         return response.json()
     },
     addProject: async function(taskText) {
-       // {text: "Позвонить маме"}
+        console.log(`Проект ${taskText} отправляется на сервер ....`)
         const response = await fetch(`${API_URL}/projects`, {
             method: 'POST',
             headers: {                         
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ 
-                text: taskText,
-                status: 'inbox'
-            })
+            body: JSON.stringify(taskText) 
         });
         
         if (!response.ok) {
@@ -80,13 +73,137 @@ export const api = {
         return response.json()
     },
     
-    delayTask: async function(taskId, delayUntil) {
-        const response = await fetch(`${API_URL}/tasks/${taskId}/delay`, {
+    addDelayedTask: async function(delayedData) {
+         console.log(`Отлож. задача ${delayedData} отправляется на сервер ....`)
+        const response = await fetch(`${API_URL}/delayed`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(delayedData)  // { description, delayUntil, sourceTaskId }
+        });
+        if (!response.ok) throw new Error('Ошибка при сохранении отложенной задачи')
+        return response.json()
+    },
+    getAllProjects: async function() {
+        const response = await fetch(`${API_URL}/projects`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) throw new Error('Ошибка при получении проектов');
+        const data = await response.json();
+        return data.projects || [];
+    },
+
+
+    deleteProject: async function(projectId) {
+        const response = await fetch(`${API_URL}/projects/${projectId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) throw new Error('Ошибка при удалении проекта');
+        return response.json();
+    },
+    
+    updateProject: async function(projectId, projectData) {
+        const response = await fetch(`${API_URL}/projects/${projectId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ delayUntil })
+            body: JSON.stringify(projectData)
         });
-        if (!response.ok) throw new Error('Ошибка при откладывании')
-        return response.json()
+        if (!response.ok) throw new Error('Ошибка при обновлении проекта');
+        return response.json();
+    },
+    getAllProblems: async function() {
+        const response = await fetch(`${API_URL}/problems`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) throw new Error('Ошибка при получении задач');
+        const data = await response.json();
+        return data.problems || [];
+    },
+
+    deleteProblem: async function(problemId) {
+        const response = await fetch(`${API_URL}/problems/${problemId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) throw new Error('Ошибка при удалении задачи');
+        return response.json();
+    },
+
+    addToCurrentWave: async function(task) {
+        const response = await fetch(`${API_URL}/current-wave`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(task)
+        });
+        if (!response.ok) throw new Error('Ошибка при добавлении в волну');
+        return response.json();
+    },
+
+    removeTaskFromProject: async function(projectId, taskId) {
+        const response = await fetch(`${API_URL}/projects/${projectId}/tasks/${taskId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) throw new Error('Ошибка при удалении задачи из проекта');
+        return response.json();
+    },
+
+    getAllProblems: async function() {
+        const response = await fetch(`${API_URL}/problems`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) throw new Error('Ошибка при получении задач');
+        const data = await response.json();
+        return data.problems || [];
+    },
+
+    deleteProblem: async function(problemId) {
+        const response = await fetch(`${API_URL}/problems/${problemId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) throw new Error('Ошибка при удалении задачи');
+        return response.json();
+    },
+
+    addToCurrentWave: async function(task) {
+        const response = await fetch(`${API_URL}/current-wave`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(task)
+        });
+        if (!response.ok) throw new Error('Ошибка при добавлении в волну');
+        return response.json();
+    },
+
+    removeTaskFromProject: async function(projectId, taskId) {
+        const response = await fetch(`${API_URL}/projects/${projectId}/tasks/${taskId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) throw new Error('Ошибка при удалении задачи из проекта');
+        return response.json();
+    },
+    getState: async function (){
+        const response = await fetch(`${API_URL}/mode`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) throw new Error('Ошибка при получении состояния');
+        return response.json();
+    },
+    setState: async function(mode) {
+        const response = await fetch(`${API_URL}/mode`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(mode)
+        });
+        
+        if (!response.ok) throw new Error('Ошибка при обновлении состояния');
+        return response.json();
     }
 }
+

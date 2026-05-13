@@ -10,6 +10,8 @@
   align-items: center;
   z-index: 1000;
   animation: fadeIn 0.2s ease;
+  flex-direction: column;
+  gap: 2rem
 }
 
 @keyframes fadeIn {
@@ -94,6 +96,7 @@
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 0.5rem;
+  padding-top: 2rem;
   align-items: center;
   box-sizing: border-box;
 }
@@ -260,4 +263,140 @@ form{
 .delay-option input[type="radio"]:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px rgba(255, 204, 0, 0.3);
+}
+
+.project-modal{
+  display: flex;
+  align-items:flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  width: 90%;
+}
+.problem_in_project{
+  display: flex;
+  align-items:center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 0.5rem;
+  padding: 0.2rem;
+  width: 90%;
+  height: auto;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: var(--color-yellow);
+  padding-left: 1rem;
+  border-style: solid;
+  box-sizing: border-box; 
+}
+.problem_in_project p {
+  flex: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  margin: 0;
+  padding: 8px 0;
+  word-break: break-all;
+  max-width: calc(100% - 40px);
+}
+.textarea_proj{
+  color: var(--color-purple);
+  padding-top: 12px;
+  padding-left: 12px;
+  font-family: inherit;
+  resize: vertical;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  border-color: var(--color-yellow);
+  margin-top: 2rem;
+}
+
+/* ========== АДАПТИВ ДЛЯ КНОПОК В UNLOADMODAL ========== */
+@media (max-width: 480px) {
+  .buttons-container {
+    flex-direction: column !important;
+    gap: 0.8rem !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  .button-human {
+    width: 100% !important;
+    padding: 0.8rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .modal-content-container {
+    padding: 1.5rem !important;
+    width: 95% !important;
+  }
+  
+  .modal-title {
+    font-size: 1.3rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .modal-close-button {
+    top: 8px !important;
+    right: 8px !important;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 18px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .buttons-container {
+    gap: 0.6rem !important;
+  }
+  
+  .button-human {
+    padding: 0.6rem 0.8rem !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .modal-title {
+    font-size: 1.1rem !important;
+  }
+}
+
+/* Горизонтальная ориентация на мобильных */
+@media (max-width: 768px) and (orientation: landscape) {
+  .modal-content-container {
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  
+  .buttons-container {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    gap: 0.5rem !important;
+  }
+  
+  .button-human {
+    flex: 1;
+    min-width: 100px;
+    font-size: 0.8rem !important;
+    padding: 0.5rem !important;
+  }
+  
+  .modal-title {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+}
+
+/* Для планшетов */
+@media (min-width: 481px) and (max-width: 768px) {
+  .buttons-container {
+    gap: 1rem !important;
+  }
+  
+  .button-human {
+    padding: 0.7rem 1.2rem !important;
+    font-size: 0.9rem !important;
+  }
 }

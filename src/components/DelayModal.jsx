@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
 export const DelayModal = ({ isOpen, taskText, onClose, onSubmit }) => {
+  const [description, setDescription] = useState('')  // ← ДОБАВЬ ЭТО!
   const [delayOption, setDelayOption] = useState('')
+  const [customDate, setCustomDate] = useState('')
   
   const delayOptions = [
     { label: 'Через 1 час', value: '1hour' },
@@ -11,8 +13,6 @@ export const DelayModal = ({ isOpen, taskText, onClose, onSubmit }) => {
     { label: 'Через неделю', value: 'week' },
     { label: 'Выбрать дату...', value: 'custom' }
   ]
-  
-  const [customDate, setCustomDate] = useState('')
   
   if (!isOpen) return null
   
@@ -40,8 +40,11 @@ export const DelayModal = ({ isOpen, taskText, onClose, onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     const delayDate = getDelayDate()
-    if (delayDate) {
-      onSubmit(delayDate.toISOString())
+    if (delayDate && description.trim()) {  // ← проверяем что описание не пустое
+      onSubmit({
+        description: description.trim(),  // ← отправляем описание
+        delayUntil: delayDate.toISOString()  // ← и дату
+      })
       onClose()
     }
   }
@@ -51,16 +54,18 @@ export const DelayModal = ({ isOpen, taskText, onClose, onSubmit }) => {
       <div className="modal-content-container" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close-button" onClick={onClose}>✕</button>
        
-        <h2 className="modal-title">{taskText}</h2>
+        <h2 className="modal-title">Отложить задачу</h2>
         
         <form onSubmit={handleSubmit}>
           <textarea
             className="name-field"
-            onChange={(e) => setTaskName(e.target.value)}
-            placeholder="Название задачи..."
-            rows={2}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)} 
+            placeholder="Описание задачи..."
+            rows={3}
             autoFocus
           />
+          
           <div className="delay-options-container">
             {delayOptions.map(option => (
               <label key={option.value} className="delay-option">
@@ -87,7 +92,7 @@ export const DelayModal = ({ isOpen, taskText, onClose, onSubmit }) => {
           )}
           
           <div className="one-button-container">
-            <button type="submit" className="button-human" disabled={!delayOption}>
+            <button type="submit" className="button-human" disabled={!delayOption || !description.trim()}>
               Отложить Задачу
             </button>
           </div>
