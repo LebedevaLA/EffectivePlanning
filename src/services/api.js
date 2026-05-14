@@ -112,43 +112,6 @@ export const api = {
         if (!response.ok) throw new Error('Ошибка при обновлении проекта');
         return response.json();
     },
-    getAllProblems: async function() {
-        const response = await fetch(`${API_URL}/problems`, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        });
-        if (!response.ok) throw new Error('Ошибка при получении задач');
-        const data = await response.json();
-        return data.problems || [];
-    },
-
-    deleteProblem: async function(problemId) {
-        const response = await fetch(`${API_URL}/problems/${problemId}`, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
-        });
-        if (!response.ok) throw new Error('Ошибка при удалении задачи');
-        return response.json();
-    },
-
-    addToCurrentWave: async function(task) {
-        const response = await fetch(`${API_URL}/current-wave`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(task)
-        });
-        if (!response.ok) throw new Error('Ошибка при добавлении в волну');
-        return response.json();
-    },
-
-    removeTaskFromProject: async function(projectId, taskId) {
-        const response = await fetch(`${API_URL}/projects/${projectId}/tasks/${taskId}`, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
-        });
-        if (!response.ok) throw new Error('Ошибка при удалении задачи из проекта');
-        return response.json();
-    },
 
     getAllProblems: async function() {
         const response = await fetch(`${API_URL}/problems`, {
@@ -176,6 +139,15 @@ export const api = {
             body: JSON.stringify(task)
         });
         if (!response.ok) throw new Error('Ошибка при добавлении в волну');
+        return response.json();
+    },
+    getAllFromCurrentWave: async function() {
+        const response = await fetch(`${API_URL}/current-wave`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(task)
+        });
+        if (!response.ok) throw new Error('Ошибка при получении дел из волны');
         return response.json();
     },
 
@@ -203,6 +175,23 @@ export const api = {
         });
         
         if (!response.ok) throw new Error('Ошибка при обновлении состояния');
+        return response.json();
+    },
+    doneProblemfromProject: async function(idProject, idProblem) {
+        const response = await fetch(`${API_URL}/projects/${idProject}/tasks/${idProblem}/done`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        
+        if (!response.ok) throw new Error('Ошибка при обновлении статуса задачи');
+        return response.json();
+    },
+    deleteProblemfromCurrentWave: async function(problemId) {
+        const response = await fetch(`${API_URL}/current-wave/${problemId}`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        if (!response.ok) throw new Error('Ошибка при удалении задачи');
         return response.json();
     }
 }

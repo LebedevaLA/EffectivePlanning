@@ -8,6 +8,7 @@
   padding: clamp(36px, 2%, 60px);
   gap: 4rem;
   align-items: center;
+  margin-bottom: 20rem;
 }
 
 .inbox_container {
@@ -30,12 +31,7 @@
     justify-content: center;
 }
 
-footer {
-  margin-top: auto;
-  width: 100%;
-  padding: 2rem 0;
-  text-align: center;
-}
+
 
 
 .inbox h2 {
@@ -93,11 +89,13 @@ footer {
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
+  width: 90%;
 }
 .project-item {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  flex-direction: column;
   background: var(--color-white);
   border-radius: 8px;
   border-style: solid;
@@ -106,6 +104,8 @@ footer {
   padding: 1rem;
   cursor: pointer;
   transition: all 0.2s;
+  width: 90%;
+  gap: 1rem;
 }
 
 .project-item:hover {

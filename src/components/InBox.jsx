@@ -47,6 +47,7 @@ export const InBox = ({ addTaskModule, onCloseAddTask, onAddTask, setMode }) => 
       const tasks = await api.getAllTasks()
       setAllTasks(tasks)
       setCurrentIndex(0)
+      console.log('Загрузка ', tasks);
       if (tasks.length > 0) {
         setCurrentTask(tasks[0])
         setIsUnloadModalOpen(true)
@@ -61,6 +62,7 @@ export const InBox = ({ addTaskModule, onCloseAddTask, onAddTask, setMode }) => 
   }
   
   const handleDeleteCurrentTask = async () => {
+    console.log('Попытка удалить:', currentTask)
     if (currentTask) {
       try {
         await api.deleteTask(currentTask.id)

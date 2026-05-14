@@ -33,11 +33,10 @@ export const ProblemModal = ({ isOpen, taskText, onClose, onSubmit }) => {
           ✕
         </button>
         <h2 className="modal-title">{taskText}</h2>
-        
         <form onSubmit={handleSubmit}>
           <textarea
             className="description-field"
-            value={taskDescription}  // ← ДОБАВИТЬ: value
+            value={taskDescription}
             onChange={(e) => setTaskDescription(e.target.value)}
             placeholder="Название и описание задачи..."
             rows={3}

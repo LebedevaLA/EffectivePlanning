@@ -2,31 +2,52 @@ import { useState, useEffect } from 'react'
 import { api } from '../services/api'
 import { InfoProject } from './InfoProject'
 
-export const ProjectBox = () => {
+export const ProjectBox = ({ setMode, onSelectionsChange }) => {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedProject, setSelectedProject] = useState(null)
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false)
+  const [projectSelections, setProjectSelections] = useState({})
   
   useEffect(() => {
     loadProjects()
   }, [])
-  const handleProjectUpdate = async () => {
+  
+  useEffect(() => {
+    if (onSelectionsChange) {
+      onSelectionsChange(projectSelections)
+    }
+  }, [projectSelections, onSelectionsChange])
+  
+  const handleProjectUpdate = async (projectId, selectedTaskId) => {
+    if (projectId && selectedTaskId !== undefined) {
+      setProjectSelections(prev => ({
+        ...prev,
+        [projectId]: selectedTaskId
+      }))
+    }
     await loadProjects()
   }
+  
   const loadProjects = async () => {
     try {
       setLoading(true)
       const data = await api.getAllProjects()
-      setProjects(data)
+      if (data.length === 0) {
+        console.log('Нет проектов, возвращаемся в Inbox');
+        setMode('inbox');
+        await api.setState('inbox');
+      }else{
+        setProjects(data)
+      }
     } catch (error) {
       console.error('Ошибка загрузки проектов:', error)
     } finally {
       setLoading(false)
     }
   }
+  
   const handleProjectClick = (project) => {
-    console.log('Проект который открываем:', project)  // ← ДОБАВЬ ЭТО
     setSelectedProject(project)
     setIsInfoModalOpen(true)
   }
@@ -44,17 +65,19 @@ export const ProjectBox = () => {
             className="project-item"
             onClick={() => handleProjectClick(project)}
           >
-            <p style={{ color: 'var(--color-purple)' }}>{project.name || 'Без названия'}</p>
+            <p style={{ color: 'var(--color-purple)'}}>{project.name || 'Без названия'}</p>
+            <p style={{ color: 'var(--color-purple)' }}>{project.description || 'Без описания'}</p>
           </div>
         ))}
       </section>
+      
       <InfoProject
         isOpen={isInfoModalOpen}
         project={selectedProject}
         onClose={() => setIsInfoModalOpen(false)}
-        onProjectUpdate={handleProjectUpdate}  // ← ПЕРЕДАЕМ ФУНКЦИЮ
+        onProjectUpdate={handleProjectUpdate}
+        initialSelectedTaskId={projectSelections[selectedProject?.id]} 
       />
     </div>
-    
   )
 }
