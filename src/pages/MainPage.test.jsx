@@ -1,44 +1,65 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import React from 'react'
+import { describe, test, expect, jest, beforeEach } from '@jest/globals'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MainPage } from './MainPage'
+import { api } from '../services/api'
 
-// Мокаем дочерние компоненты
-jest.mock('../components/InBox', () => ({
-  InBox: ({ mode }) => <div data-testid="inbox">Mode: {mode}</div>
+jest.mock('../services/api', () => ({
+  api: {
+    getState: jest.fn(),
+    setState: jest.fn(),
+    getAllTasks: jest.fn(),
+    getAllProjects: jest.fn(),
+    getAllProblems: jest.fn(),
+    getAllFromCurrentWave: jest.fn(),
+    addTask: jest.fn(),
+  },
 }))
 
-jest.mock('../components/ModeToggle', () => ({
-  ModeToggle: ({ mode, onToggle }) => (
-    <button onClick={() => onToggle(mode === 'monkey' ? 'human' : 'monkey')}>
-      Toggle Mode (current: {mode})
-    </button>
-  )
-}))
+describe('MainPage', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
 
-describe('MainPage Component', () => {
-  it('должен отображать заголовок', () => {
-    render(<MainPage />)
-    expect(screen.getByText('Effective Planning')).toBeInTheDocument()
+    api.getState.mockResolvedValue({ mode: 'inbox' })
+    api.setState.mockResolvedValue({ mode: 'inbox' })
+    api.getAllTasks.mockResolvedValue([])
+    api.getAllProjects.mockResolvedValue([])
+    api.getAllProblems.mockResolvedValue([])
+    api.getAllFromCurrentWave.mockResolvedValue([])
+    api.addTask.mockResolvedValue({
+      id: 1,
+      text: 'Новое дело',
+      status: 'inbox',
+    })
   })
 
-  it('должен начальный режим monkey', () => {
+  test('отображает главную страницу', () => {
     render(<MainPage />)
-    expect(screen.getByTestId('inbox')).toHaveTextContent('Mode: monkey')
+
+    expect(
+      screen.getByRole('heading', { name: /effective planning/i })
+    ).toBeInTheDocument()
   })
 
-  it('должен переключать режим при клике на тумблер', () => {
+  test('отображает кнопку добавления дела в Inbox', () => {
     render(<MainPage />)
-    
-    const toggleButton = screen.getByText(/Toggle Mode/)
-    
-    // Начальный режим
-    expect(screen.getByTestId('inbox')).toHaveTextContent('Mode: monkey')
-    
-    // Переключение на human
-    fireEvent.click(toggleButton)
-    expect(screen.getByTestId('inbox')).toHaveTextContent('Mode: human')
-    
-    // Переключение обратно на monkey
-    fireEvent.click(toggleButton)
-    expect(screen.getByTestId('inbox')).toHaveTextContent('Mode: monkey')
+
+    expect(
+      screen.getByRole('button', { name: /добавить дело в inbox/i })
+    ).toBeInTheDocument()
+  })
+
+  test('открывает модальное окно добавления дела', async () => {
+    const user = userEvent.setup()
+
+    render(<MainPage />)
+
+    await user.click(
+      screen.getByRole('button', { name: /добавить дело в inbox/i })
+    )
+
+    expect(screen.getByText(/добавить новое дело/i)).toBeInTheDocument()
+    expect(screen.getByPlaceholderText(/опишите дело/i)).toBeInTheDocument()
   })
 })
