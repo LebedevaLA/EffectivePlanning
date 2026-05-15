@@ -40,8 +40,13 @@ export const GiveProblem = ({ setMode, addTaskModule, onCloseAddTask, onAddTask 
       setCurrentIndex(null);
       setAllProblems(null);
       setDescrProblemModalOpen(false);
-      await api.setState('projects');
-      setMode('projects');
+      if (inbox.length > 0){
+        await api.setState('inbox');
+        setMode('inbox');
+      }else{
+        await api.setState('projects');
+        setMode('projects');
+      }
     }
   }
 
