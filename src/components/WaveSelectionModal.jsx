@@ -74,7 +74,6 @@ export const WaveSelectionModal = ({
           problemId: problem.id,
           problemDescription: problem.description,
           selectedAt: new Date().toISOString(),
-          type: 'problem'
         })
         await api.deleteProblem(problem.id);
       }

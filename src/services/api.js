@@ -145,7 +145,6 @@ export const api = {
         const response = await fetch(`${API_URL}/current-wave`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(task)
         });
         if (!response.ok) throw new Error('Ошибка при получении дел из волны');
         return response.json();

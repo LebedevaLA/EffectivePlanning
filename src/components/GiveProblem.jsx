@@ -47,7 +47,7 @@ export const GiveProblem = ({ setMode }) => {
 
   const loadProblems = async () => {
     try {
-      const problems = await api.getCurrentWave();
+      const problems = await api.getAllFromCurrentWave();
       console.log('Загружены задачи из текущей волны:', problems);
       setAllProblems(problems);
       setCurrentIndex(0);

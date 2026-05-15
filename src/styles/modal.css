@@ -575,3 +575,18 @@ form{
   background-color: #ccc;
   box-shadow: inset 0 0 0 4px white;
 }
+
+
+.text-conteiner-do-problem{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: normal;
+  overflow-wrap: break-word; 
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem;
+}

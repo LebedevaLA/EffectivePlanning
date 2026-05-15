@@ -4,6 +4,7 @@ import { TaskModal } from '../components/InBoxAddWindow'
 import { api } from '../services/api'
 import { ProjectBox } from '../components/ProjectBox'
 import { WaveSelectionModal } from '../components/WaveSelectionModal'
+import { GiveProblem } from '../components/GiveProblem'
 
 export const MainPage = () => {
   const [mode, setMode] = useState('')
@@ -67,7 +68,7 @@ export const MainPage = () => {
           </button>
         </>
       )}
-      {mode === 'done' && (
+      {mode === 'do' && (
         <GiveProblem
           setMode={setMode}
         />
