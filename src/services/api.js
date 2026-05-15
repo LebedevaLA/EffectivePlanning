@@ -3,7 +3,7 @@ const API_URL = 'http://localhost:3000/api'
 export const api = {
     addTask: async function(taskText) {
        // {text: "Позвонить маме"}
-        const response = await fetch(`${API_URL}/tasks`, {
+        const response = await fetch(`${API_URL}/inbox`, {
             method: 'POST',
             headers: {                         
                 'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export const api = {
         return response.json()
     },
     getAllTasks: async function() {
-        const response = await fetch(`${API_URL}/tasks?status=inbox`, {
+        const response = await fetch(`${API_URL}/inbox`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
