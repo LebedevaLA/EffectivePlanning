@@ -133,6 +133,7 @@ export const api = {
     },
 
     addToCurrentWave: async function(task) {
+        console.log('Отправляю ', task, ' ожидаю что в таком виде и попадет в файл')
         const response = await fetch(`${API_URL}/current-wave`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

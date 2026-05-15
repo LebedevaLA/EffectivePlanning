@@ -1,6 +1,6 @@
 import { useState } from 'react'
-
-export const ProblemDescription = ({ isOpen, problem, onComplete }) => {
+import {TaskModal} from './InBoxAddWindow'
+export const ProblemDescription = ({ isOpen, problem, onComplete, addTaskModule, onCloseAddTask, onAddTask }) => {
   if (!isOpen || !problem) return null;
   
   const handleComplete = () => {
@@ -13,6 +13,12 @@ export const ProblemDescription = ({ isOpen, problem, onComplete }) => {
   return (
     <>
       <div className="modal-overlay">
+        <button 
+          className='add-task-button' 
+          onClick={onCloseAddTask}
+        >
+          Добавить дело в Inbox
+        </button>
         <div className="modal-content-container" onClick={(e) => e.stopPropagation()}>
             <div className="text-conteiner-do-problem">
               <p style={{ color: 'var(--color-purple)' }}>{problem.problemDescription}</p>
@@ -30,6 +36,11 @@ export const ProblemDescription = ({ isOpen, problem, onComplete }) => {
                 Сделано
                 </button>
             </div>
+            <TaskModal 
+                    isOpen={addTaskModule}
+                    onClose={onCloseAddTask}
+                    onAdd={onAddTask}
+                  />
         </div>
       </div>
     </>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { api } from "../services/api"
 import { ProblemDescription } from './ProblemDescription'
 
-export const GiveProblem = ({ setMode }) => {
+export const GiveProblem = ({ setMode, addTaskModule, onCloseAddTask, onAddTask }) => {
   const [isDescrProblemOpen, setDescrProblemModalOpen] = useState(false)
   const [currentProblem, setCurrentProblem] = useState(null)
   const [allProblems, setAllProblems] = useState(null)
@@ -91,6 +91,9 @@ export const GiveProblem = ({ setMode }) => {
         isOpen={isDescrProblemOpen}
         problem={currentProblem}
         onComplete={handleCloseDescrProblemModal}
+        addTaskModule = { addTaskModule}
+        onCloseAddTask={ onCloseAddTask }
+        onAddTask={ onAddTask }
       />
     </div>
   )

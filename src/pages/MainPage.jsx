@@ -71,6 +71,9 @@ export const MainPage = () => {
       {mode === 'do' && (
         <GiveProblem
           setMode={setMode}
+          addTaskModule={addTaskModule}
+          onCloseAddTask={handleAddTaskModule}
+          onAddTask={handleAddTask}
         />
       )}
       <TaskModal
